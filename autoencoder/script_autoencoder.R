@@ -1,0 +1,5 @@
+array <- commandArgs(trailingOnly = TRUE)
+source("skeleton_autoencoder.R")
+library(rCASC)
+file=paste(getwd(), array[1],sep="/")
+autoencoder4clusteringsw(group="docker", scratch.folder=getwd(), file=file, separator=",", bias="TF", index=array[2], nEpochs=100, projectName=array[3])
