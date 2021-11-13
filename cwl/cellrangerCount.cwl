@@ -6,6 +6,7 @@ requirements:
   InitialWorkDirRequirement:
     listing:
       - entry: $(inputs.fastqFolder)
+        writable: true
 inputs:
   fileRCount:
     type: File

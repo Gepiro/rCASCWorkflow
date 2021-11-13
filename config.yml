@@ -211,7 +211,7 @@ skeletonPermutationFinal:
   path: permutationClustering/Final/skeleton_finalClustering.R
 permutationFolder:
   class: Directory
-  path: ResultsWorkflow
+  path: ResultsWorkflow/mtxKilledCell
 fileRPermAnalysis:
   class: File
   path: permAnalysis/script_Analysis.R 

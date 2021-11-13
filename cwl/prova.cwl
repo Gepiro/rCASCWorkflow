@@ -53,33 +53,17 @@ outputs:
       type: array
       items: File
     outputSource: permutationP/mtxPermutationP
+  mtxAutoencoder:
+    type:
+      type: array
+      items: File
+    outputSource: autoencoder/mtxAutoencoder
   mtxPermutationFinalP:
     type: File
     outputSource: permutationFinal/mtxPermutationFinalP
   mtxPermutationFinalK:
     type: File
     outputSource: permutationFinal/mtxPermutationFinalK
-  data:
-    type: Directory
-    outputSource: comet/data
-  vis:
-    type: Directory
-    outputSource: comet/vis
-  pickles:
-    type: Directory
-    outputSource: comet/pickles
-  mtxScore:
-    type: File
-    outputSource: permAnalysis/mtxScore
-  mtxScoreSum:
-    type: File
-    outputSource: permAnalysis/mtxScoreSum
-  mtxAutoencoder:
-    type:
-      type: array
-      items: File
-    outputSource: autoencoder/mtxAutoencoder
-
 
 steps:
   count:
@@ -132,6 +116,14 @@ steps:
       nCluster: permutationzero/nCluster
       index: index_prova
     out: [mtxKilledCell, mtxPermutationP]
+  comet:
+    run: comet.cwl
+    in:
+      fileRComet: fileRComet
+      file: topx/mtxTopX
+      clusteringOutput: permutationzero/mtxPermutationZero
+      skeleton: skeletonComet
+    out: [data, vis, pickles]
   permutationFinal:
     run: permutationClusteringFinal.cwl
     in:
@@ -142,25 +134,6 @@ steps:
       nCluster: permutationzero/nCluster
       stopFiles: permutationP/mtxKilledCell
     out: [mtxPermutationFinalP, mtxPermutationFinalK]
-  permAnalysis:
-    run: permAnalysis.cwl
-    in:
-      fileRPermAnalysis: fileRPermAnalysis
-      mtxTopX: topx/mtxTopX
-      clusteringOutput: permutationzero/mtxPermutationZero
-      clusterP: permutationFinal/mtxPermutationFinalP
-      kill: permutationFinal/mtxPermutationFinalK
-      nCluster: permutationzero/nCluster
-      skeleton: skeletonPermAnalysis
-    out: [mtxScore, mtxScoreSum]
-  comet:
-    run: comet.cwl
-    in:
-      fileRComet: fileRComet
-      file: topx/mtxTopX
-      clusteringOutput: permutationzero/mtxPermutationZero
-      skeleton: skeletonComet
-    out: [data, vis, pickles]
   autoencoder:
     run: autoencoder.cwl
     scatter: index
